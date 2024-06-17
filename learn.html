@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>English Vocabulary Trainer</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+        #wordDisplay {
+            margin-top: 20px;
+        }
+        #englishWord {
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>English Vocabulary Trainer</h1>
+
+    <div class="settings">
+        <label for="start">Start Index:</label>
+        <input type="number" id="start" min="0" max="99" value="0">
+
+        <label for="end">End Index:</label>
+        <input type="number" id="end" min="1" max="100" value="9">
+
+        <button id="shuffle">Shuffle</button>
+    </div>
+
+    <div id="wordDisplay">
+        <h2 id="englishWord"></h2>
+        <p id="hebrewTranslation"></p>
+        <p id="exampleSentence"></p>
+    </div>
+
+    <button id="playButton">Start Reading</button>
+
+    <script>
+        // Vocabulary Data (Replace with your 100 words)
+        const vocabulary = [
+    { english: "attic", hebrew: "עליית גג", example: "The old books were stored in the attic." },
+    { english: "banister", hebrew: "מעקה", example: "She held onto the banister as she climbed the stairs." },
+    { english: "balcony", hebrew: "מרפסת", example: "We enjoyed the view from our hotel balcony." },
+    { english: "basement", hebrew: "מרתף", example: "The laundry room is in the basement." },
+    { english: "chimney", hebrew: "ארובה", example: "Smoke billowed from the chimney." },
+    { english: "corridor", hebrew: "מסדרון", example: "The long corridor led to the classrooms." },
+    { english: "cupboard", hebrew: "ארון", example: "The dishes are kept in the cupboard." },
+    { english: "curtain", hebrew: "וילון", example: "She closed the curtains to block out the sunlight." },
+    { english: "doorway", hebrew: "פתח", example: "He stood in the doorway, hesitating to enter." },
+    { english: "drain", hebrew: "ניקוז", example: "The water went down the drain." },
+    { english: "faucet", hebrew: "ברז", example: "Turn off the faucet when you're done brushing your teeth." },
+    { english: "fence", hebrew: "גדר", example: "The wooden fence surrounded the garden." },
+    { english: "floorboard", hebrew: "קרש רצפה", example: "The old floorboard creaked under his weight." },
+    { english: "garage", hebrew: "מוסך", example: "The car is parked in the garage." },
+    { english: "gutter", hebrew: "מרזב", example: "The leaves clogged the gutter." },
+    { english: "hinge", hebrew: "ציר", example: "The rusty hinge squeaked when the door opened." },
+    { english: "knob", hebrew: "ידית", example: "Turn the knob to open the door." },
+    { english: "lawn", hebrew: "מדשאה", example: "The children played on the lawn." },
+    { english: "porch", hebrew: "מרפסת כניסה", example: "We sat on the porch and watched the sunset." },
+    { english: "shutter", hebrew: "תריס", example: "The shutters were closed to protect the windows from the storm." },
+    { english: "staircase", hebrew: "גרם מדרגות", example: "The grand staircase led to the upper floors." },
+    { english: "threshold", hebrew: "סף", example: "He paused at the threshold before entering the room." },
+    { english: "windowsill", hebrew: " אדן החלון", example: "The cat sat on the windowsill, basking in the sun." },
+    { english: "aisle", hebrew: "מעבר", example: "He walked down the aisle of the supermarket." },
+    { english: "appliance", hebrew: "מכשיר חשמלי", example: "The kitchen is equipped with modern appliances." },
+    { english: "awning", hebrew: "סוכך", example: "The awning provided shade on the patio." },
+    { english: "beam", hebrew: "קורה", example: "The wooden beams supported the roof." },
+    { english: "broom", hebrew: "מטאטא", example: "She swept the floor with a broom." },
+    { english: "bulb", hebrew: "נורה", example: "The light bulb needs to be replaced." },
+    { english: "cabinet", hebrew: "ארון (עם מדפים)", example: "The glasses are stored in the cabinet." },
+    { english: "ceiling", hebrew: "תקרה", example: "The ceiling fan circulated the air." },
+    { english: "cellar", hebrew: "מרתף", example: "The wine is kept in the cellar." },
+    { english: "countertop", hebrew: "משטח עבודה", example: "She prepared the food on the kitchen countertop." },
+    { english: "crate", hebrew: "ארגז", example: "The vegetables were shipped in wooden crates." },
+    { english: "deck", hebrew: "סיפון", example: "We relaxed on the deck of the boat." },
+    { english: "doorknob", hebrew: "ידית הדלת", example: "She turned the doorknob and entered the room." },
+    { english: "driveway", hebrew: "שביל גישה", example: "The car pulled into the driveway." },
+    { english: "fixture", hebrew: "גוף תאורה", example: "The light fixture illuminated the hallway." },
+    { english: "foundation", hebrew: "יסודות", example: "The house was built on a solid foundation." },
+    { english: "furniture", hebrew: "רהיטים", example: "The living room was furnished with comfortable furniture." },
+    { english: "hammer", hebrew: "פטיש", example: "He used a hammer to drive the nail into the wall." },
+    { english: "hardware", hebrew: "חומרה", example: "The hardware store sells tools and supplies." },
+    { english: "hedge", hebrew: "גדר חיה", example: "The trimmed hedge formed a border around the property." },
+    { english: "keyhole", hebrew: "חור המנעול", example: "She inserted the key into the keyhole." },
+    { english: "ladder", hebrew: "סולם", example: "He climbed the ladder to reach the roof." },
+    { english: "latch", hebrew: "בריח", example: "She lifted the latch and opened the gate." },
+    { english: "mattress", hebrew: "מזרן", example: "The comfortable mattress ensured a good night's sleep." },
+    { english: "outlet", hebrew: "שקע חשמלי", example: "Plug the lamp into the outlet." },
+    { english: "paintbrush", hebrew: "מברשת צבע", example: "He dipped the paintbrush into the can of paint." },
+    { english: "pantry", hebrew: "מזווה", example: "The canned goods are stored in the pantry." },
+    { english: "patio", hebrew: "פטיו", example: "We had a barbecue on the patio." },
+    { english: "pillar", hebrew: "עמוד", example: "The marble pillars supported the temple." },
+    { english: "pillow", hebrew: "כרית", example: "She fluffed up the pillow before going to bed." },
+    { english: "plumbing", hebrew: "אינסטלציה", example: "The plumber fixed the leak in the plumbing." },
+    { english: "rooftop", hebrew: "גג", example: "The view from the rooftop was amazing." },
+    { english: "rug", hebrew: "שטיח", example: "The colorful rug added warmth to the room." },
+    { english: "saw", hebrew: "מסור", example: "He used a saw to cut the wood." },
+    { english: "screw", hebrew: "בורג", example: "Tighten the screws to secure the shelf." },
+    { english: "shed", hebrew: "סככה", example: "The gardening tools are kept in the shed." },
+    { english: "shelf", hebrew: "מדף", example: "The books are arranged on the shelves." },
+    { english: "showerhead", hebrew: "ראש מקלחת", example: "The water streamed from the showerhead." },
+    { english: "sink", hebrew: "כיור", example: "Wash your hands in the sink." },
+    { english: "socket", hebrew: "שקע", example: "He plugged the appliance into the socket." },
+    { english: "sofa", hebrew: "ספה", example: "They sat on the sofa and watched TV." },
+    { english: "stool", hebrew: "שרפרף", example: "He sat on the bar stool and ordered a drink." },
+    { english: "switch", hebrew: "מתג", example: "Flip the switch to turn on the light." },
+    { english: "terrace", hebrew: "מרפסת", example: "The restaurant had a lovely terrace overlooking the sea." },
+    { english: "tile", hebrew: "אריח", example: "The bathroom floor was covered in ceramic tiles." },
+    { english: "toolbox", hebrew: "ארגז כלים", example: "He kept his tools organized in a toolbox." },
+    { english: "wallpaper", hebrew: "טפט", example: "The floral wallpaper brightened up the room." },
+    { english: "yard", hebrew: "חצר", example: "The children played in the backyard." }
+
+        ];
+
+        const startInput = document.getElementById("start");
+        const endInput = document.getElementById("end");
+        const shuffleButton = document.getElementById("shuffle");
+        const playButton = document.getElementById("playButton");
+        const englishWordDisplay = document.getElementById("englishWord");
+        const hebrewTranslationDisplay = document.getElementById("hebrewTranslation");
+        const exampleSentenceDisplay = document.getElementById("exampleSentence");
+
+        let shuffledWords = [];
+        let currentWordIndex = 0;
+        let isReading = false;
+
+        // Load and display initial word
+        function loadWord(index) {
+            const word = shuffledWords[index] || vocabulary[index];
+            englishWordDisplay.textContent = word.english;
+            hebrewTranslationDisplay.textContent = word.hebrew;
+            exampleSentenceDisplay.textContent = word.example;
+        }
+
+        // Function to speak text
+        function speakText(text, lang = "en-US") {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+            speechSynthesis.speak(utterance);
+        }
+
+        // Reading function (triggered by the button)
+        function startReading() {
+            isReading = !isReading;
+            playButton.textContent = isReading ? "Pause Reading" : "Start Reading";
+
+            if (isReading) {
+                readNextWord();
+            }
+        }
+
+        // Read the next word in the sequence
+        function readNextWord() {
+            if (isReading) {
+                const word = shuffledWords[currentWordIndex] || vocabulary[currentWordIndex];
+
+                speakText(word.english); // Read English word
+                setTimeout(() => speakText(word.hebrew, "he-IL"), 1500); // Read Hebrew after 1.5 sec delay
+
+                loadWord(currentWordIndex); // Update the display (optional if you only want audio)
+
+                currentWordIndex = (currentWordIndex + 1) % shuffledWords.length;
+                setTimeout(readNextWord, 4000); // Adjust interval to allow time for speech (4 seconds here)
+            }
+        }
+
+        // Shuffle functionality
+        function shuffleWords() {
+            const startIndex = parseInt(startInput.value, 10);
+            const endIndex = parseInt(endInput.value, 10);
+            shuffledWords = vocabulary.slice(startIndex, endIndex + 1).sort(() => Math.random() - 0.5);
+            currentWordIndex = 0;
+            loadWord(currentWordIndex); // Load the first shuffled word
+        }
+
+        // Event Listeners
+        shuffleButton.addEventListener("click", shuffleWords);
+        playButton.addEventListener("click", startReading);
+
+        // Initial setup
+        shuffleWords();
+        loadWord(currentWordIndex);
+    </script>
+</body>
+</html>
