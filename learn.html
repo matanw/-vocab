@@ -27,16 +27,18 @@
         <label for="end">End Index:</label>
         <input type="number" id="end" min="1" max="100" value="9">
 
-        <button id="shuffle">Shuffle</button>
+        <label for="pattern">Pattern:</label>
+        <input type="text" id="pattern" value="eeh">
+
+        <label for="shuffle">Shuffle?</label>
+        <input type="checkbox" id="shuffle" name="shuffle" checked />
     </div>
 
     <div id="wordDisplay">
-        <h2 id="englishWord"></h2>
-        <p id="hebrewTranslation"></p>
-        <p id="exampleSentence"></p>
     </div>
 
-    <button id="playButton">Start Reading</button>
+    <button id="playButton">Play</button>
+    <button id="showButton">Show</button>
 
     <script>
         // Vocabulary Data (Replace with your 100 words)
@@ -117,72 +119,70 @@
 
         const startInput = document.getElementById("start");
         const endInput = document.getElementById("end");
-        const shuffleButton = document.getElementById("shuffle");
+        const patternInput = document.getElementById("pattern");
         const playButton = document.getElementById("playButton");
-        const englishWordDisplay = document.getElementById("englishWord");
-        const hebrewTranslationDisplay = document.getElementById("hebrewTranslation");
-        const exampleSentenceDisplay = document.getElementById("exampleSentence");
+        const showButton = document.getElementById("showButton");
+        const wordDisplay = document.getElementById("wordDisplay");
+        const shuffle = document.getElementById("shuffle");
 
-        let shuffledWords = [];
-        let currentWordIndex = 0;
-        let isReading = false;
 
-        // Load and display initial word
-        function loadWord(index) {
-            const word = shuffledWords[index] || vocabulary[index];
-            englishWordDisplay.textContent = word.english;
-            hebrewTranslationDisplay.textContent = word.hebrew;
-            exampleSentenceDisplay.textContent = word.example;
-        }
-
-        // Function to speak text
-        function speakText(text, lang = "en-US") {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = lang;
-            speechSynthesis.speak(utterance);
-        }
-
-        // Reading function (triggered by the button)
-        function startReading() {
-            isReading = !isReading;
-            playButton.textContent = isReading ? "Pause Reading" : "Start Reading";
-
-            if (isReading) {
-                readNextWord();
-            }
-        }
-
-        // Read the next word in the sequence
-        function readNextWord() {
-            if (isReading) {
-                const word = shuffledWords[currentWordIndex] || vocabulary[currentWordIndex];
-
-                speakText(word.english); // Read English word
-                setTimeout(() => speakText(word.hebrew, "he-IL"), 1500); // Read Hebrew after 1.5 sec delay
-
-                loadWord(currentWordIndex); // Update the display (optional if you only want audio)
-
-                currentWordIndex = (currentWordIndex + 1) % shuffledWords.length;
-                setTimeout(readNextWord, 4000); // Adjust interval to allow time for speech (4 seconds here)
-            }
-        }
-
-        // Shuffle functionality
-        function shuffleWords() {
+        function show(){
             const startIndex = parseInt(startInput.value, 10);
             const endIndex = parseInt(endInput.value, 10);
-            shuffledWords = vocabulary.slice(startIndex, endIndex + 1).sort(() => Math.random() - 0.5);
-            currentWordIndex = 0;
-            loadWord(currentWordIndex); // Load the first shuffled word
+            words=vocabulary.slice(startIndex, endIndex + 1);
+            s="";
+            for (var i = 0; i < words.length; i++) {
+                s= s + words[i].english+ "-" + words[i].hebrew+ "<br />"
+            }
+            wordDisplay.innerHTML = s
         }
 
-        // Event Listeners
-        shuffleButton.addEventListener("click", shuffleWords);
-        playButton.addEventListener("click", startReading);
+        async function play(){
+            while(true){           
+                const startIndex = parseInt(startInput.value, 10);
+                const endIndex = parseInt(endInput.value, 10);
+                words=vocabulary.slice(startIndex, endIndex + 1);
+                if (shuffle.checked) {
+                    words = words.sort(() => Math.random() - 0.5);
+                }
+                for (var i = 0; i < words.length; i++) {
+                   patternText = pattern.value
+                   for (var j=0; j< patternText.length;j++) {
+                         if (patternText[j]=='e'){
+                            await say(words[i].english,'en');
+                         } else if (patternText[j]=='s'){
+                            await say(words[i].example,'en');
+                         }  else if (patternText[j]=='h'){
+                            await say(words[i].hebrew,'he-IL');
+                         } 
+                     }  
+                }
 
-        // Initial setup
-        shuffleWords();
-        loadWord(currentWordIndex);
+                await say('new-cycle','en');
+
+            }
+
+
+        }
+
+        function say(word, lang = 'en') {
+              return new Promise((resolve, reject) => {
+                     const utterance = new SpeechSynthesisUtterance(word);
+                          utterance.lang = lang;
+
+                          utterance.onend = () => resolve();
+                          utterance.onerror = reject;
+
+                          speechSynthesis.speak(utterance);
+                      });
+        }
+
+
+        showButton.addEventListener("click", show);
+
+        playButton.addEventListener("click", play);
+
+
     </script>
 </body>
 </html>
