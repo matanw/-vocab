@@ -34,11 +34,11 @@
         <input type="checkbox" id="shuffle" name="shuffle" checked />
     </div>
 
+    <button id="playButton">Play</button>
+    <button id="showButton">Show</button>
     <div id="wordDisplay">
     </div>
 
-    <button id="playButton">Play</button>
-    <button id="showButton">Show</button>
 
     <script>
         // Vocabulary Data (Replace with your 100 words)
@@ -132,7 +132,7 @@
             words=vocabulary.slice(startIndex, endIndex + 1);
             s="";
             for (var i = 0; i < words.length; i++) {
-                s= s + words[i].english+ "-" + words[i].hebrew+ "<br />"
+                s += '<b>' + words[i].english + '</b> - ' + words[i].hebrew +' <br /> '+words[i].example +' <br/> <br/> ';
             }
             wordDisplay.innerHTML = s
         }
