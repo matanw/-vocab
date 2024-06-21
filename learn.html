@@ -36,6 +36,7 @@
 
     <button id="playButton">Play</button>
     <button id="showButton">Show</button>
+    <button id="testButton">Test</button>
     <div id="wordDisplay">
     </div>
 
@@ -122,6 +123,7 @@
         const patternInput = document.getElementById("pattern");
         const playButton = document.getElementById("playButton");
         const showButton = document.getElementById("showButton");
+        const testButton = document.getElementById("testButton");
         const wordDisplay = document.getElementById("wordDisplay");
         const shuffle = document.getElementById("shuffle");
 
@@ -136,6 +138,36 @@
             }
             wordDisplay.innerHTML = s
         }
+
+
+        async function test(){
+            const startIndex = parseInt(startInput.value, 10);
+            const endIndex = parseInt(endInput.value, 10);
+            words=vocabulary.slice(startIndex, endIndex + 1);
+            round=1
+            while (words.length>0){
+                words = words.sort(() => Math.random() - 0.5);
+                nextLevel=[];
+                prev=""
+                for (var i = 0; i < words.length; i++) {
+                    await say(words[i].english);
+                    know = await showSelect(
+                        "round " +round + " \n"
+                        + i + "/"+ words.length+ "\n" +
+
+                        prev + "\n" +words[i].english + "?", ['y','n'])
+                    if (know == 'n'){
+                        nextLevel.push(words[i]);
+                    }
+                    prev=words[i].english + " - " + words[i].hebrew
+
+                }
+                words=nextLevel;
+
+        
+            }
+        }
+
 
         async function play(){
             while(true){           
@@ -177,10 +209,37 @@
                       });
         }
 
+        async function showSelect(text, options) {
+          return new Promise((resolve) => {
+            // Clear existing content
+            wordDisplay.innerHTML = ''; 
+
+            // Display text (create element to append text, instead of directly setting to wordDisplay)
+            const textElement = document.createElement('p');
+            textElement.textContent = text;
+            wordDisplay.appendChild(textElement);
+
+            // Create option buttons
+            options.forEach((option) => {
+              const button = document.createElement('button');
+              button.textContent = option;
+              button.addEventListener('click', () => {
+                resolve(option); 
+                wordDisplay.innerHTML = ''; // Clear again after selection
+              });
+              wordDisplay.appendChild(button);
+            });
+          });
+        }
+
+
+
 
         showButton.addEventListener("click", show);
 
         playButton.addEventListener("click", play);
+
+        testButton.addEventListener("click", test);
 
 
     </script>
