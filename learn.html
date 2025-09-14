@@ -813,8 +813,13 @@
         }
 
 
+        var playId=0;
+
+
         async function play(){
-            while(true){           
+            var thisId=Math.random();
+            playId=thisId;
+            while(thisId === playId){           
                 const startIndex = parseInt(startInput.value, 10);
                 const endIndex = parseInt(endInput.value, 10);
                 words=vocabulary.slice(startIndex, endIndex + 1);
