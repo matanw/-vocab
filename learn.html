@@ -5,44 +5,302 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Vocabulary Trainer</title>
     <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --background-color: #f5f5f5;
+            --text-color: #333;
+            --card-background: #fff;
+        }
+
         body {
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
             text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
         }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            background: var(--card-background);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        #playButton {
+            background-color: var(--primary-color);
+        }
+
+        #showButton {
+            background-color: var(--secondary-color);
+        }
+
+        #testButton {
+            background-color: #ff9800;
+        }
+
+        .options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         #wordDisplay {
-            margin-top: 20px;
+            background: var(--card-background);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        #englishWord {
-            font-size: 2em;
+
+        .word-card {
+            background: var(--card-background);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .word-english {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .word-hebrew {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .word-example {
+            font-style: italic;
+            color: #666;
+        }
+
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .controls {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+                padding: 15px; /* Larger touch targets */
+            }
+
+            .options {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .audio-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            input[type="range"] {
+                width: 100%;
+                height: 30px; /* Larger touch target */
+            }
+
+            input[type="number"],
+            input[type="text"] {
+                padding: 12px;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
+            .word-card {
+                padding: 15px;
+            }
+
+            .keyboard-shortcuts {
+                display: none; /* Hide keyboard shortcuts on mobile */
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .keyboard-shortcuts {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
+    <div class="container">
 
     <h1>English Vocabulary Trainer</h1>
 
-    <div class="settings">
-        <label for="start">Start Index:</label>
-        <input type="number" id="start" min="0" max="99" value="0">
+    <div class="controls">
+        <div class="control-group">
+            <label for="start">Start Index:</label>
+            <input type="number" id="start" min="0" max="99" value="0">
+        </div>
 
-        <label for="end">End Index:</label>
-        <input type="number" id="end" min="1" max="100" value="9">
+        <div class="control-group">
+            <label for="end">End Index:</label>
+            <input type="number" id="end" min="1" max="100" value="9">
+        </div>
 
-        <label for="pattern">Pattern:</label>
-        <input type="text" id="pattern" value="eeh">
-
-        <label for="shuffle">Shuffle?</label>
-        <input type="checkbox" id="shuffle" name="shuffle" checked />
+        <div class="control-group">
+            <label for="pattern">Pattern:</label>
+            <input type="text" id="pattern" value="eeh" placeholder="e=English, h=Hebrew, s=Sentence">
+        </div>
     </div>
 
-    <button id="playButton">Play</button>
-    <button id="showButton">Show</button>
-    <button id="testButton">Test</button>
-    <div id="wordDisplay">
+    <div class="options">
+        <div class="checkbox-group">
+            <label for="shuffle">Shuffle Words:</label>
+            <input type="checkbox" id="shuffle" name="shuffle" checked>
+        </div>
+
+        <div class="audio-controls">
+            <div class="speed-control">
+                <label for="speed">Speech Speed:</label>
+                <input type="range" id="speed" min="0.5" max="2" step="0.1" value="1">
+                <span id="speedValue">1x</span>
+            </div>
+            <div class="volume-control">
+                <label for="volume">Volume:</label>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button id="playButton">Play</button>
+        <button id="pauseButton">Pause</button>
+        <button id="showButton">Show</button>
+        <button id="testButton">Test</button>
+        <button id="searchButton">Search</button>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div id="wordDisplay"></div>
+
+    <div class="keyboard-shortcuts">
+        Shortcuts: Space = Play/Pause, ← → = Navigate, ↑ ↓ = Volume
     </div>
 
 
-    <script> 
+    <script>
+        let currentWordIndex = 0;
+        let isPlaying = false;
+        let speechRate = 1;
+        let volume = 1;
+
         const vocabulary = [
   { "english": "bland", "hebrew": "תפל", "example": "The chicken was a bit bland; it needed more seasoning." },
   { "english": "boil", "hebrew": "להרתיח", "example": "You need to boil the water before adding the pasta." },
@@ -840,129 +1098,316 @@
         const endInput = document.getElementById("end");
         const patternInput = document.getElementById("pattern");
         const playButton = document.getElementById("playButton");
+        const pauseButton = document.getElementById("pauseButton");
         const showButton = document.getElementById("showButton");
         const testButton = document.getElementById("testButton");
+        const searchButton = document.getElementById("searchButton");
         const wordDisplay = document.getElementById("wordDisplay");
-        const shuffle = document.getElementById("shuffle");
+        const shuffleCheckbox = document.getElementById("shuffle");
+        const speedControl = document.getElementById("speed");
+        const speedValue = document.getElementById("speedValue");
+        const volumeControl = document.getElementById("volume");
+        const progressBar = document.getElementById("progress");
 
+        // Event Listeners for controls
+        speedControl.addEventListener("input", (e) => {
+            speechRate = parseFloat(e.target.value);
+            speedValue.textContent = speechRate + "x";
+        });
 
-        function show(){
-            const startIndex = parseInt(startInput.value, 10);
-            const endIndex = parseInt(endInput.value, 10);
-            words=vocabulary.slice(startIndex, endIndex + 1);
-            s="";
-            for (var i = 0; i < words.length; i++) {
-                s += '<b>' + words[i].english + '</b> - ' + words[i].hebrew +' <br /> '+words[i].example +' <br/> <br/> ';
+        volumeControl.addEventListener("input", (e) => {
+            volume = parseFloat(e.target.value);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener("keydown", (e) => {
+            switch(e.key) {
+                case " ":
+                    e.preventDefault();
+                    isPlaying ? pause() : play();
+                    break;
+                case "ArrowLeft":
+                    previousWord();
+                    break;
+                case "ArrowRight":
+                    nextWord();
+                    break;
+                case "ArrowUp":
+                    volumeControl.value = Math.min(1, parseFloat(volumeControl.value) + 0.1);
+                    volume = volumeControl.value;
+                    break;
+                case "ArrowDown":
+                    volumeControl.value = Math.max(0, parseFloat(volumeControl.value) - 0.1);
+                    volume = volumeControl.value;
+                    break;
             }
-            wordDisplay.innerHTML = s
+        });
+
+        function updateProgress() {
+            const total = vocabulary.length;
+            const progress = ((currentWordIndex + 1) / total) * 100;
+            progressBar.style.width = progress + "%";
         }
 
+        function showWord(word) {
+            const cardHtml = `
+                <div class="word-card">
+                    <div class="word-english">${word.english}</div>
+                    <div class="word-hebrew">${word.hebrew}</div>
+                    <div class="word-example">${word.example}</div>
+                </div>
+            `;
+            wordDisplay.innerHTML = cardHtml;
+        }
 
-        async function test(){
+        function previousWord() {
+            if (currentWordIndex > 0) {
+                currentWordIndex--;
+                const words = getSelectedWords();
+                showWord(words[currentWordIndex]);
+                updateProgress();
+            }
+        }
+
+        function nextWord() {
+            const words = getSelectedWords();
+            if (currentWordIndex < words.length - 1) {
+                currentWordIndex++;
+                showWord(words[currentWordIndex]);
+                updateProgress();
+            }
+        }
+
+        function getSelectedWords() {
             const startIndex = parseInt(startInput.value, 10);
             const endIndex = parseInt(endInput.value, 10);
-            words=vocabulary.slice(startIndex, endIndex + 1);
-            round=1
-            while (words.length>0){
-                words = words.sort(() => Math.random() - 0.5);
-                nextLevel=[];
-                prev=""
-                for (var i = 0; i < words.length; i++) {
-                    await say(words[i].english);
-                    know = await showSelect(
-                        "round " +round + " \n"
-                        + i + "/"+ words.length+ "\n" +
+            let words = vocabulary.slice(startIndex, endIndex + 1);
+            return shuffleCheckbox.checked ? words.sort(() => Math.random() - 0.5) : words;
+        }
 
-                        prev + "\n" +words[i].english + "?", ['y','n'])
-                    if (know == 'n'){
-                        nextLevel.push(words[i]);
-                    }
-                    prev=words[i].english + " - " + words[i].hebrew
+        async function say(word, lang = 'en') {
+            return new Promise((resolve, reject) => {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = lang;
+                utterance.rate = speechRate;
+                utterance.volume = volume;
 
+                utterance.onend = () => resolve();
+                utterance.onerror = reject;
+
+                speechSynthesis.speak(utterance);
+            });
+        }
+
+        function pause() {
+            isPlaying = false;
+            playbackId = null; // Reset playback session
+            speechSynthesis.cancel();
+            playButton.textContent = "Resume";
+            
+            // Save current state
+            saveProgress();
+        }
+
+        let playbackId = null; // Track current playback session
+
+        async function play() {
+            // Stop any existing playback
+            pause();
+            
+            // Generate new playback ID
+            playbackId = Date.now();
+            const currentPlaybackId = playbackId;
+
+            isPlaying = true;
+            playButton.textContent = "Pause";
+            const words = getSelectedWords();
+
+            // Reset progress if parameters changed
+            if (currentWordIndex >= words.length) {
+                currentWordIndex = 0;
+            }
+
+            for (let i = currentWordIndex; i < words.length; i++) {
+                // Check if this playback session is still current
+                if (playbackId !== currentPlaybackId || !isPlaying) {
+                    break;
                 }
-                words=nextLevel;
 
-        
+                currentWordIndex = i;
+                updateProgress();
+                showWord(words[i]);
+
+                const patternText = patternInput.value;
+                for (let j = 0; j < patternText.length; j++) {
+                    // Check if this playback session is still current
+                    if (playbackId !== currentPlaybackId || !isPlaying) {
+                        break;
+                    }
+
+                    if (patternText[j] === 'e') {
+                        await say(words[i].english, 'en');
+                    } else if (patternText[j] === 's') {
+                        await say(words[i].example, 'en');
+                    } else if (patternText[j] === 'h') {
+                        await say(words[i].hebrew, 'he-IL');
+                    }
+                }
+            }
+
+            // Only proceed if this is still the current playback session
+            if (playbackId === currentPlaybackId && isPlaying) {
+                await say('new-cycle', 'en');
+                currentWordIndex = 0;
+                updateProgress();
             }
         }
 
+        function show() {
+            const words = getSelectedWords();
+            wordDisplay.innerHTML = words.map(word => `
+                <div class="word-card">
+                    <div class="word-english">${word.english}</div>
+                    <div class="word-hebrew">${word.hebrew}</div>
+                    <div class="word-example">${word.example}</div>
+                </div>
+            `).join('');
+        }
 
-        var playId=0;
+        async function test() {
+            let words = getSelectedWords();
+            let round = 1;
 
-
-        async function play(){
-            var thisId=Math.random();
-            playId=thisId;
-            while(thisId === playId){           
-                const startIndex = parseInt(startInput.value, 10);
-                const endIndex = parseInt(endInput.value, 10);
-                words=vocabulary.slice(startIndex, endIndex + 1);
-                if (shuffle.checked) {
+            while (words.length > 0) {
+                if (shuffleCheckbox.checked) {
                     words = words.sort(() => Math.random() - 0.5);
                 }
-                for (var i = 0; i < words.length; i++) {
-                   patternText = pattern.value
-                   for (var j=0; j< patternText.length;j++) {
-                         if (patternText[j]=='e'){
-                            await say(words[i].english,'en');
-                         } else if (patternText[j]=='s'){
-                            await say(words[i].example,'en');
-                         }  else if (patternText[j]=='h'){
-                            await say(words[i].hebrew,'he-IL');
-                         } 
-                     }  
+                
+                const nextLevel = [];
+                for (let i = 0; i < words.length; i++) {
+                    currentWordIndex = i;
+                    updateProgress();
+                    showWord(words[i]);
+                    await say(words[i].english);
+                    
+                    const response = await new Promise(resolve => {
+                        const responseDiv = document.createElement('div');
+                        responseDiv.className = 'buttons';
+                        responseDiv.innerHTML = `
+                            <button onclick="this.parentElement.dataset.response='y'">I Know This</button>
+                            <button onclick="this.parentElement.dataset.response='n'">Don't Know</button>
+                        `;
+                        wordDisplay.appendChild(responseDiv);
+                        
+                        const checkResponse = setInterval(() => {
+                            if (responseDiv.dataset.response) {
+                                clearInterval(checkResponse);
+                                const response = responseDiv.dataset.response;
+                                responseDiv.remove();
+                                resolve(response);
+                            }
+                        }, 100);
+                    });
+
+                    if (response === 'n') {
+                        nextLevel.push(words[i]);
+                    }
                 }
 
-                await say('new-cycle','en');
-
+                words = nextLevel;
+                round++;
+                
+                if (words.length > 0) {
+                    await new Promise(resolve => {
+                        wordDisplay.innerHTML = `
+                            <div class="word-card">
+                                <h2>Round ${round}</h2>
+                                <p>${words.length} words remaining</p>
+                                <button onclick="this.parentElement.parentElement.remove(); resolve();">
+                                    Continue to Next Round
+                                </button>
+                            </div>
+                        `;
+                    });
+                }
             }
 
-
+            wordDisplay.innerHTML = `
+                <div class="word-card">
+                    <h2>Congratulations!</h2>
+                    <p>You've learned all the words in this set.</p>
+                </div>
+            `;
         }
 
-        function say(word, lang = 'en') {
-              return new Promise((resolve, reject) => {
-                     const utterance = new SpeechSynthesisUtterance(word);
-                          utterance.lang = lang;
-
-                          utterance.onend = () => resolve();
-                          utterance.onerror = reject;
-
-                          speechSynthesis.speak(utterance);
-                      });
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('vocabProgress', JSON.stringify({
+                currentIndex: currentWordIndex,
+                startIndex: startInput.value,
+                endIndex: endInput.value,
+                pattern: patternInput.value,
+                shuffle: shuffleCheckbox.checked,
+                speed: speedControl.value,
+                volume: volumeControl.value
+            }));
         }
 
-        async function showSelect(text, options) {
-          return new Promise((resolve) => {
-            // Clear existing content
-            wordDisplay.innerHTML = ''; 
-
-            // Display text (create element to append text, instead of directly setting to wordDisplay)
-            const textElement = document.createElement('p');
-            textElement.textContent = text;
-            wordDisplay.appendChild(textElement);
-
-            // Create option buttons
-            options.forEach((option) => {
-              const button = document.createElement('button');
-              button.textContent = option;
-              button.addEventListener('click', () => {
-                resolve(option); 
-                wordDisplay.innerHTML = ''; // Clear again after selection
-              });
-              wordDisplay.appendChild(button);
-            });
-          });
+        // Load progress from localStorage
+        function loadProgress() {
+            const progress = JSON.parse(localStorage.getItem('vocabProgress'));
+            if (progress) {
+                currentWordIndex = progress.currentIndex;
+                startInput.value = progress.startIndex;
+                endInput.value = progress.endIndex;
+                patternInput.value = progress.pattern;
+                shuffleCheckbox.checked = progress.shuffle;
+                speedControl.value = progress.speed || 1;
+                volumeControl.value = progress.volume || 1;
+                updateProgress();
+            }
         }
 
+        // Search functionality
+        searchButton.addEventListener("click", () => {
+            const searchTerm = prompt("Enter search term:");
+            if (searchTerm) {
+                const results = vocabulary.filter(word => 
+                    word.english.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    word.hebrew.includes(searchTerm) ||
+                    word.example.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+                
+                wordDisplay.innerHTML = results.length > 0 ? 
+                    results.map(word => `
+                        <div class="word-card">
+                            <div class="word-english">${word.english}</div>
+                            <div class="word-hebrew">${word.hebrew}</div>
+                            <div class="word-example">${word.example}</div>
+                        </div>
+                    `).join('') :
+                    '<div class="word-card">No results found</div>';
+            }
+        });
 
-
-
-        showButton.addEventListener("click", show);
-
+        // Initialize event listeners
         playButton.addEventListener("click", play);
-
+        pauseButton.addEventListener("click", pause);
+        showButton.addEventListener("click", show);
         testButton.addEventListener("click", test);
+
+        // Stop playback when parameters change
+        [startInput, endInput, patternInput, shuffleCheckbox].forEach(element => {
+            element.addEventListener("change", () => {
+                if (isPlaying) {
+                    pause();
+                }
+            });
+        });
+
+        // Initialize
+        loadProgress();
+        window.addEventListener('beforeunload', saveProgress);
 
 
     </script>
