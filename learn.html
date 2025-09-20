@@ -1228,38 +1228,40 @@
                 currentWordIndex = 0;
             }
 
-            for (let i = currentWordIndex; i < words.length; i++) {
-                // Check if this playback session is still current
-                if (playbackId !== currentPlaybackId || !isPlaying) {
-                    break;
-                }
-
-                currentWordIndex = i;
-                updateProgress();
-                showWord(words[i]);
-
-                const patternText = patternInput.value;
-                for (let j = 0; j < patternText.length; j++) {
+            while (isPlaying && playbackId === currentPlaybackId) {
+                for (let i = currentWordIndex; i < words.length; i++) {
                     // Check if this playback session is still current
                     if (playbackId !== currentPlaybackId || !isPlaying) {
                         break;
                     }
 
-                    if (patternText[j] === 'e') {
-                        await say(words[i].english, 'en');
-                    } else if (patternText[j] === 's') {
-                        await say(words[i].example, 'en');
-                    } else if (patternText[j] === 'h') {
-                        await say(words[i].hebrew, 'he-IL');
+                    currentWordIndex = i;
+                    updateProgress();
+                    showWord(words[i]);
+
+                    const patternText = patternInput.value;
+                    for (let j = 0; j < patternText.length; j++) {
+                        // Check if this playback session is still current
+                        if (playbackId !== currentPlaybackId || !isPlaying) {
+                            break;
+                        }
+
+                        if (patternText[j] === 'e') {
+                            await say(words[i].english, 'en');
+                        } else if (patternText[j] === 's') {
+                            await say(words[i].example, 'en');
+                        } else if (patternText[j] === 'h') {
+                            await say(words[i].hebrew, 'he-IL');
+                        }
                     }
                 }
-            }
 
-            // Only proceed if this is still the current playback session
-            if (playbackId === currentPlaybackId && isPlaying) {
-                await say('new-cycle', 'en');
-                currentWordIndex = 0;
-                updateProgress();
+                // Reset for next cycle if still playing
+                if (playbackId === currentPlaybackId && isPlaying) {
+                    await say('new-cycle', 'en');
+                    currentWordIndex = 0;
+                    updateProgress();
+                }
             }
         }
 
