@@ -1186,38 +1186,16 @@
         }
 
         async function say(word, lang = 'en') {
-            return new Promise((resolve) => {
-                // First ensure speech synthesis is ready
-                if (speechSynthesis.speaking) {
-                    speechSynthesis.cancel();
-                }
-
+            return new Promise((resolve, reject) => {
                 const utterance = new SpeechSynthesisUtterance(word);
                 utterance.lang = lang;
                 utterance.rate = speechRate;
                 utterance.volume = volume;
 
-                // Handle both success and error cases
                 utterance.onend = () => resolve();
-                utterance.onerror = (event) => {
-                    console.warn('Speech synthesis error:', event);
-                    resolve(); // Resolve anyway to continue the flow
-                };
+                utterance.onerror = reject;
 
-                try {
-                    speechSynthesis.speak(utterance);
-                    
-                    // Sometimes speech synthesis can get stuck
-                    setTimeout(() => {
-                        if (speechSynthesis.speaking) {
-                            speechSynthesis.cancel();
-                            resolve();
-                        }
-                    }, 5000); // Timeout after 5 seconds
-                } catch (error) {
-                    console.warn('Speech synthesis failed:', error);
-                    resolve(); // Resolve anyway to continue the flow
-                }
+                speechSynthesis.speak(utterance);
             });
         }
 
@@ -1317,18 +1295,20 @@
                     const response = await new Promise(resolve => {
                         const responseDiv = document.createElement('div');
                         responseDiv.className = 'buttons';
-                        
-                        const knowButton = document.createElement('button');
-                        knowButton.textContent = "I Know This";
-                        knowButton.addEventListener('click', () => resolve('y'));
-                        
-                        const dontKnowButton = document.createElement('button');
-                        dontKnowButton.textContent = "Don't Know";
-                        dontKnowButton.addEventListener('click', () => resolve('n'));
-                        
-                        responseDiv.appendChild(knowButton);
-                        responseDiv.appendChild(dontKnowButton);
+                        responseDiv.innerHTML = `
+                            <button onclick="this.parentElement.dataset.response='y'">I Know This</button>
+                            <button onclick="this.parentElement.dataset.response='n'">Don't Know</button>
+                        `;
                         wordDisplay.appendChild(responseDiv);
+                        
+                        const checkResponse = setInterval(() => {
+                            if (responseDiv.dataset.response) {
+                                clearInterval(checkResponse);
+                                const response = responseDiv.dataset.response;
+                                responseDiv.remove();
+                                resolve(response);
+                            }
+                        }, 100);
                     });
 
                     if (response === 'n') {
@@ -1341,27 +1321,15 @@
                 
                 if (words.length > 0) {
                     await new Promise(resolve => {
-                        const roundDiv = document.createElement('div');
-                        roundDiv.className = 'word-card';
-                        
-                        const heading = document.createElement('h2');
-                        heading.textContent = `Round ${round}`;
-                        
-                        const status = document.createElement('p');
-                        status.textContent = `${words.length} words remaining`;
-                        
-                        const continueButton = document.createElement('button');
-                        continueButton.textContent = 'Continue to Next Round';
-                        continueButton.addEventListener('click', () => {
-                            roundDiv.remove();
-                            resolve();
-                        });
-                        
-                        roundDiv.appendChild(heading);
-                        roundDiv.appendChild(status);
-                        roundDiv.appendChild(continueButton);
-                        wordDisplay.innerHTML = '';
-                        wordDisplay.appendChild(roundDiv);
+                        wordDisplay.innerHTML = `
+                            <div class="word-card">
+                                <h2>Round ${round}</h2>
+                                <p>${words.length} words remaining</p>
+                                <button onclick="this.parentElement.parentElement.remove(); resolve();">
+                                    Continue to Next Round
+                                </button>
+                            </div>
+                        `;
                     });
                 }
             }
