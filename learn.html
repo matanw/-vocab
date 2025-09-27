@@ -146,6 +146,16 @@
             color: #666;
         }
 
+        .word-id {
+            font-size: 12px;
+            color: #999;
+            background-color: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
         .audio-controls {
             display: flex;
             gap: 10px;
@@ -438,50 +448,29 @@
         { english: "trekker", hebrew: "מטייל רגלי", example: "Experienced trekkers know how to pack light." },
 
 
-        /* שמות תואר של תיאור */
-  { "english": "ubiquitous", "hebrew": "נמצא בכל מקום", "example": "The company’s logo has become ubiquitous in the city." },
-  { "english": "meticulous", "hebrew": "קפדני / דקדקן", "example": "The scientist was known for his meticulous attention to detail." },
-  { "english": "vibrant", "hebrew": "תוסס / מלא חיים", "example": "The city has a vibrant nightlife and art scene." },
-  { "english": "ephemeral", "hebrew": "חולף / ארעי", "example": "Fame in the age of social media is often ephemeral." },
-  { "english": "subtle", "hebrew": "עדין / דק", "example": "There was a subtle difference in flavor between the two wines." },
-  { "english": "perplexed", "hebrew": "נבוך / מבולבל", "example": "The complex puzzle left the students completely perplexed." },
-  { "english": "arduous", "hebrew": "מפרך / קשה", "example": "Climbing the mountain was an arduous and exhausting task." },
-  { "english": "succinct", "hebrew": "תמציתי / קצר ולעניין", "example": "Please keep your report short and succinct." },
-  { "english": "ambiguous", "hebrew": "דו-משמעי / עמום", "example": "The politician gave an ambiguous answer to the journalist’s question." },
-  { "english": "resplendent", "hebrew": "מפואר / זוהר", "example": "The queen looked resplendent in her diamond gown." },
-  { "english": "turbulent", "hebrew": "סוער / הפכפך", "example": "The country has gone through a long period of turbulent history." },
-  { "english": "prudent", "hebrew": "זהיר / שקול", "example": "It would be prudent to save some money for emergencies." },
-  { "english": "cohesive", "hebrew": "מגובש / לכיד", "example": "The team presented a cohesive and unified plan to the board." },
-  { "english": "austere", "hebrew": "סגפני / חסכן", "example": "The monk lived a simple and austere life." },
-  { "english": "irrevocable", "hebrew": "בלתי הפיך", "example": "The decision to close the factory is final and irrevocable." },
-  { "english": "pervasive", "hebrew": "נפוץ / חודרני", "example": "The smell of smoke was pervasive throughout the building." },
-  { "english": "sagacious", "hebrew": "נבון / חכם", "example": "The elder gave the young man some sagacious advice." },
-  { "english": "transient", "hebrew": "זמני / עובר", "example": "The feeling of happiness was unfortunately transient." },
-  { "english": "innocuous", "hebrew": "לא מזיק / תמים", "example": "The comment seemed innocuous, but it caused a lot of trouble." },
-  { "english": "eloquent", "hebrew": "רהוט / לשון חלקלק", "example": "The speaker delivered an eloquent address on climate change." },
+        /* פעלים של פעולה */
 
-
-  /*verb */
-  { "english": "commence", "hebrew": "להתחיל / לפתוח ב-", "example": "The ceremony will commence at exactly nine o’clock." },
-  { "english": "scrutinize", "hebrew": "לבחון בדקדקנות", "example": "The tax inspector will scrutinize all of your financial records." },
-  { "english": "convene", "hebrew": "לכנס / להתכנס", "example": "The committee will convene next week to discuss the budget." },
-  { "english": "elucidate", "hebrew": "להבהיר / להסביר", "example": "Could you please further elucidate your previous statement?" },
-  { "english": "vouch", "hebrew": "לערב / להתחייב", "example": "I can vouch for his honesty and professional skill." },
-  { "english": "apprehend", "hebrew": "לעצור / לתפוס", "example": "The police were able to apprehend the suspect near the station." },
-  { "english": "waive", "hebrew": "לוותר על", "example": "The bank agreed to waive the late payment fee this month." },
-  { "english": "reiterate", "hebrew": "לחזור ולומר / לשנן", "example": "Let me reiterate the main points of the agreement." },
-  { "english": "reprimand", "hebrew": "לנזוף", "example": "The soldier was severely reprimanded for disobeying orders." },
-  { "english": "transcend", "hebrew": "להתעלות על / לחרוג מ-", "example": "His music transcends cultural and language barriers." },
-  { "english": "concede", "hebrew": "להודות ב- / לוותר", "example": "After a long debate, he finally had to concede defeat." },
-  { "english": "incur", "hebrew": "לצבור / להיגרם", "example": "The company incurred huge losses due to the product recall." },
-  { "english": "assess", "hebrew": "להעריך / לאמוד", "example": "The team needs to assess the risk before launch." },
-  { "english": "disseminate", "hebrew": "להפיץ / לפזר (מידע)", "example": "The news organization works to disseminate facts quickly." },
-  { "english": "allege", "hebrew": "לטעון / להאשים", "example": "The former employee alleges that the company engaged in fraud." },
-  { "english": "stipulate", "hebrew": "לקבוע כתנאי / להכתיב", "example": "The contract stipulates the exact terms of payment." },
-  { "english": "undermine", "hebrew": "לחתור תחת / לערער", "example": "Constant criticism can undermine a child's confidence." },
-  { "english": "mitigate", "hebrew": "להקל / לשכך", "example": "The insurance policy will mitigate the financial damage." },
-  { "english": "forfeit", "hebrew": "לאבד (זכות או רכוש) / לוותר", "example": "If you break the rules, you will forfeit your security deposit." },
-  { "english": "procure", "hebrew": "להשיג / לרכוש", "example": "The logistics team must procure all the necessary raw materials." } ,
+   { english: "commence", hebrew: "להתחיל / לפתוח ב-", example: "The ceremony will commence at exactly nine o'clock." },
+  { english: "scrutinize", hebrew: "לבחון בדקדקנות", example: "The tax inspector will scrutinize all of your financial records." },
+  { english: "convene", hebrew: "לכנס / להתכנס", example: "The committee will convene next week to discuss the budget." },
+  { english: "elucidate", hebrew: "להבהיר / להסביר", example: "Could you please further elucidate your previous statement?" },
+  { english: "vouch", hebrew: "לערב / להתחייב", example: "I can vouch for his honesty and professional skill." },
+  { english: "apprehend", hebrew: "לעצור / לתפוס", example: "The police were able to apprehend the suspect near the station." },
+  { english: "waive", hebrew: "לוותר על", example: "The bank agreed to waive the late payment fee this month." },
+  { english: "reiterate", hebrew: "לחזור ולומר / לשנן", example: "Let me reiterate the main points of the agreement." },
+  { english: "reprimand", hebrew: "לנזוף", example: "The soldier was severely reprimanded for disobeying orders." },
+  { english: "transcend", hebrew: "להתעלות על / לחרוג מ-", example: "His music transcends cultural and language barriers." },
+  { english: "concede", hebrew: "להודות ב- / לוותר", example: "After a long debate, he finally had to concede defeat." },
+  { english: "incur", hebrew: "לצבור / להיגרם", example: "The company incurred huge losses due to the product recall." },
+  { english: "assess", hebrew: "להעריך / לאמוד", example: "The team needs to assess the risk before launch." },
+  { english: "disseminate", hebrew: "להפיץ / לפזר (מידע)", example: "The news organization works to disseminate facts quickly." },
+  { english: "allege", hebrew: "לטעון / להאשים", example: "The former employee alleges that the company engaged in fraud." },
+  { english: "stipulate", hebrew: "לקבוע כתנאי / להכתיב", example: "The contract stipulates the exact terms of payment." },
+  { english: "undermine", hebrew: "לחתור תחת / לערער", example: "Constant criticism can undermine a child's confidence." },
+  { english: "mitigate", hebrew: "להקל / לשכך", example: "The insurance policy will mitigate the financial damage." },
+  { english: "forfeit", hebrew: "לאבד (זכות או רכוש) / לוותר", example: "If you break the rules, you will forfeit your security deposit." },
+  { english: "procure", hebrew: "להשיג / לרכוש", example: "The logistics team must procure all the necessary raw materials." },
+  
    { english: "bland", hebrew: "תפל", example: "The chicken was a bit bland; it needed more seasoning." },
   { english: "boil", hebrew: "להרתיח", example: "You need to boil the water before adding the pasta." },
   { english: "broil", hebrew: "לצלות", example: "I'll broil the steak for a few minutes to give it a nice crust." },
@@ -1329,9 +1318,10 @@
             progressBar.style.width = progress + "%";
         }
 
-        function showWord(word) {
+        function showWord(word, index) {
             const cardHtml = `
                 <div class="word-card">
+                    <div class="word-id">ID: ${index}</div>
                     <div class="word-english">${word.english}</div>
                     <div class="word-hebrew">${word.hebrew}</div>
                     <div class="word-example">${word.example}</div>
@@ -1344,7 +1334,8 @@
             if (currentWordIndex > 0) {
                 currentWordIndex--;
                 const words = getSelectedWords();
-                showWord(words[currentWordIndex]);
+                const startIndex = parseInt(startInput.value, 10);
+                showWord(words[currentWordIndex], startIndex + currentWordIndex);
                 updateProgress();
             }
         }
@@ -1353,7 +1344,8 @@
             const words = getSelectedWords();
             if (currentWordIndex < words.length - 1) {
                 currentWordIndex++;
-                showWord(words[currentWordIndex]);
+                const startIndex = parseInt(startInput.value, 10);
+                showWord(words[currentWordIndex], startIndex + currentWordIndex);
                 updateProgress();
             }
         }
@@ -1417,7 +1409,8 @@
 
                     currentWordIndex = i;
                     updateProgress();
-                    showWord(words[i]);
+                    const startIndex = parseInt(startInput.value, 10);
+                    showWord(words[i], startIndex + i);
 
                     const patternText = patternInput.value;
                     for (let j = 0; j < patternText.length; j++) {
@@ -1447,8 +1440,10 @@
 
         function show() {
             const words = getSelectedWords();
-            wordDisplay.innerHTML = words.map(word => `
+            const startIndex = parseInt(startInput.value, 10);
+            wordDisplay.innerHTML = words.map((word, i) => `
                 <div class="word-card">
+                    <div class="word-id">ID: ${startIndex + i}</div>
                     <div class="word-english">${word.english}</div>
                     <div class="word-hebrew">${word.hebrew}</div>
                     <div class="word-example">${word.example}</div>
@@ -1469,7 +1464,8 @@
                 for (let i = 0; i < words.length; i++) {
                     currentWordIndex = i;
                     updateProgress();
-                    showWord(words[i]);
+                    const startIndex = parseInt(startInput.value, 10);
+                    showWord(words[i], startIndex + i);
                     await say(words[i].english);
                     
                     const response = await new Promise(resolve => {
@@ -1554,15 +1550,17 @@
         searchButton.addEventListener("click", () => {
             const searchTerm = prompt("Enter search term:");
             if (searchTerm) {
-                const results = vocabulary.filter(word => 
-                    word.english.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    word.hebrew.includes(searchTerm) ||
-                    word.example.toLowerCase().includes(searchTerm.toLowerCase())
-                );
+                const results = vocabulary.map((word, index) => ({ word, index }))
+                    .filter(({ word }) => 
+                        word.english.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        word.hebrew.includes(searchTerm) ||
+                        word.example.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
                 
                 wordDisplay.innerHTML = results.length > 0 ? 
-                    results.map(word => `
+                    results.map(({ word, index }) => `
                         <div class="word-card">
+                            <div class="word-id">ID: ${index}</div>
                             <div class="word-english">${word.english}</div>
                             <div class="word-hebrew">${word.hebrew}</div>
                             <div class="word-example">${word.example}</div>
