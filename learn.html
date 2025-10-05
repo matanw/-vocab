@@ -1511,11 +1511,15 @@
                             <div class="word-card">
                                 <h2>Round ${round}</h2>
                                 <p>${words.length} words remaining</p>
-                                <button onclick="this.parentElement.parentElement.remove(); resolve();">
-                                    Continue to Next Round
-                                </button>
+                                <button id="nextRoundBtn">Continue to Next Round</button>
                             </div>
                         `;
+
+                        const btn = document.getElementById('nextRoundBtn');
+                        btn.addEventListener('click', () => {
+                            wordDisplay.querySelector('.word-card').remove();
+                            resolve();
+                        });
                     });
                 }
             }
