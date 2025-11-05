@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible Audio Player</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --card-background: #fff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            background: var(--card-background);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        input[type="range"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="range"] {
+            padding: 0;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #playButton {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        #playButton:hover {
+            background-color: #2980b9;
+        }
+
+        #stopButton {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        #stopButton:hover {
+            background-color: #c0392b;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status {
+            background: var(--card-background);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .current-playing {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .playlist {
+            background: var(--card-background);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .playlist-item {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .playlist-item:last-child {
+            border-bottom: none;
+        }
+
+        .playlist-item.current {
+            background-color: #e8f4fd;
+            font-weight: bold;
+        }
+
+        .playlist-item.completed {
+            color: #27ae60;
+        }
+
+        .range-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .range-input input {
+            flex: 1;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📖 Bible Audio Player</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="bookNumber">Book Number:</label>
+                <input type="number" id="bookNumber" value="10" min="1" max="66">
+                <div class="help-text">Enter the book number (1-66)</div>
+            </div>
+            
+            <div class="control-group">
+                <label for="chapterRange">Chapter Range:</label>
+                <input type="text" id="chapterRange" placeholder="10,13,20-30" value="1">
+                <div class="help-text">Enter chapters separated by commas. Use ranges like 20-30 for multiple chapters.</div>
+            </div>
+            
+            <div class="control-group">
+                <label for="repeatCount">Repeat per Chapter:</label>
+                <input type="number" id="repeatCount" value="3" min="1" max="10">
+                <div class="help-text">How many times to repeat each chapter</div>
+            </div>
+            
+            <div class="control-group">
+                <label for="playbackSpeed">Playback Speed:</label>
+                <input type="range" id="playbackSpeed" min="0.5" max="2" step="0.1" value="1">
+                <span id="speedValue">1.0x</span>
+                <div class="help-text">Adjust audio playback speed</div>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button id="playButton">▶️ Play</button>
+            <button id="stopButton" disabled>⏹️ Stop</button>
+        </div>
+        
+        <div class="status">
+            <div class="current-playing" id="currentStatus">Ready to play</div>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div id="progressText">0%</div>
+        </div>
+        
+        <div class="playlist">
+            <h3>Playlist</h3>
+            <div id="playlistItems"></div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentPlaylist = [];
+        let currentIndex = 0;
+        let currentRepeat = 0;
+        let isPlaying = false;
+        let audio = null;
+        let playlistElement = null;
+
+        // Initialize the app
+        function initializeApp() {
+            setupEventListeners();
+            updateSpeedDisplay();
+            generatePlaylist();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            document.getElementById('playButton').addEventListener('click', togglePlay);
+            document.getElementById('stopButton').addEventListener('click', stopPlayback);
+            document.getElementById('playbackSpeed').addEventListener('input', updateSpeedDisplay);
+            document.getElementById('bookNumber').addEventListener('change', generatePlaylist);
+            document.getElementById('chapterRange').addEventListener('change', generatePlaylist);
+            document.getElementById('repeatCount').addEventListener('change', generatePlaylist);
+        }
+
+        // Update speed display
+        function updateSpeedDisplay() {
+            const speed = document.getElementById('playbackSpeed').value;
+            document.getElementById('speedValue').textContent = speed + 'x';
+        }
+
+        // Parse chapter range input
+        function parseChapterRange(rangeInput) {
+            const chapters = [];
+            const parts = rangeInput.split(',');
+            
+            for (let part of parts) {
+                part = part.trim();
+                if (part.includes('-')) {
+                    // Handle range like "20-30"
+                    const [start, end] = part.split('-').map(n => parseInt(n.trim()));
+                    for (let i = start; i <= end; i++) {
+                        chapters.push(i);
+                    }
+                } else {
+                    // Handle single chapter
+                    chapters.push(parseInt(part));
+                }
+            }
+            
+            return chapters.sort((a, b) => a - b);
+        }
+
+        // Generate playlist based on current settings
+        function generatePlaylist() {
+            const bookNumber = document.getElementById('bookNumber').value;
+            const chapterRange = document.getElementById('chapterRange').value;
+            const repeatCount = parseInt(document.getElementById('repeatCount').value);
+            
+            const chapters = parseChapterRange(chapterRange);
+            currentPlaylist = [];
+            
+            // Create playlist items
+            for (let chapter of chapters) {
+                for (let repeat = 0; repeat < repeatCount; repeat++) {
+                    currentPlaylist.push({
+                        book: bookNumber,
+                        chapter: chapter,
+                        repeat: repeat + 1,
+                        totalRepeats: repeatCount,
+                        url: `https://mechon-mamre.org/mp3/t${bookNumber.padStart(4, '0')}.mp3`,
+                        title: `Book ${bookNumber}, Chapter ${chapter} (${repeat + 1}/${repeatCount})`
+                    });
+                }
+            }
+            
+            updatePlaylistDisplay();
+        }
+
+        // Update playlist display
+        function updatePlaylistDisplay() {
+            playlistElement = document.getElementById('playlistItems');
+            playlistElement.innerHTML = '';
+            
+            currentPlaylist.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'playlist-item';
+                div.id = `playlist-item-${index}`;
+                div.innerHTML = `
+                    <span>${item.title}</span>
+                    <span>${item.url}</span>
+                `;
+                playlistElement.appendChild(div);
+            });
+        }
+
+        // Toggle play/stop
+        function togglePlay() {
+            if (isPlaying) {
+                stopPlayback();
+            } else {
+                startPlayback();
+            }
+        }
+
+        // Start playback
+        function startPlayback() {
+            if (currentPlaylist.length === 0) {
+                generatePlaylist();
+            }
+            
+            isPlaying = true;
+            currentIndex = 0;
+            currentRepeat = 0;
+            
+            document.getElementById('playButton').textContent = '⏸️ Pause';
+            document.getElementById('stopButton').disabled = false;
+            
+            playCurrentItem();
+        }
+
+        // Stop playback
+        function stopPlayback() {
+            isPlaying = false;
+            
+            if (audio) {
+                audio.pause();
+                audio = null;
+            }
+            
+            document.getElementById('playButton').textContent = '▶️ Play';
+            document.getElementById('stopButton').disabled = true;
+            document.getElementById('currentStatus').textContent = 'Stopped';
+            document.getElementById('progress').style.width = '0%';
+            document.getElementById('progressText').textContent = '0%';
+            
+            // Reset playlist display
+            currentPlaylist.forEach((_, index) => {
+                const item = document.getElementById(`playlist-item-${index}`);
+                if (item) {
+                    item.classList.remove('current', 'completed');
+                }
+            });
+        }
+
+        // Play current item
+        function playCurrentItem() {
+            if (!isPlaying || currentIndex >= currentPlaylist.length) {
+                stopPlayback();
+                document.getElementById('currentStatus').textContent = 'Playback completed!';
+                return;
+            }
+            
+            const item = currentPlaylist[currentIndex];
+            
+            // Update status
+            document.getElementById('currentStatus').textContent = `Loading: ${item.title}`;
+            
+            // Update playlist display
+            updatePlaylistDisplay();
+            const currentItem = document.getElementById(`playlist-item-${currentIndex}`);
+            if (currentItem) {
+                currentItem.classList.add('current');
+            }
+            
+            // Create and play audio
+            audio = new Audio();
+            audio.preload = 'auto';
+            audio.playbackRate = parseFloat(document.getElementById('playbackSpeed').value);
+            
+            // Set up event listeners before setting src
+            audio.addEventListener('loadstart', () => {
+                console.log('Loading audio...');
+                document.getElementById('currentStatus').textContent = `Loading: ${item.title}`;
+            });
+            
+            audio.addEventListener('canplay', () => {
+                console.log('Audio ready to play');
+                document.getElementById('currentStatus').textContent = `Playing: ${item.title}`;
+            });
+            
+            audio.addEventListener('timeupdate', () => {
+                if (audio && audio.duration && !isNaN(audio.duration)) {
+                    const progress = (audio.currentTime / audio.duration) * 100;
+                    document.getElementById('progress').style.width = progress + '%';
+                    document.getElementById('progressText').textContent = Math.round(progress) + '%';
+                }
+            });
+            
+            audio.addEventListener('ended', () => {
+                console.log('Audio ended');
+                // Mark current item as completed
+                if (currentItem) {
+                    currentItem.classList.remove('current');
+                    currentItem.classList.add('completed');
+                }
+                
+                // Move to next item
+                currentIndex++;
+                setTimeout(() => {
+                    playCurrentItem();
+                }, 500); // Small delay between items
+            });
+            
+            audio.addEventListener('error', (e) => {
+                console.error('Audio error:', e);
+                console.error('Error details:', {
+                    code: audio.error ? audio.error.code : 'unknown',
+                    message: audio.error ? audio.error.message : 'unknown error',
+                    url: item.url
+                });
+                
+                document.getElementById('currentStatus').textContent = `Error loading: ${item.title}`;
+                
+                // Mark as failed in playlist
+                if (currentItem) {
+                    currentItem.classList.remove('current');
+                    currentItem.classList.add('failed');
+                    currentItem.style.color = '#e74c3c';
+                }
+                
+                // Skip to next item
+                currentIndex++;
+                setTimeout(() => {
+                    playCurrentItem();
+                }, 2000); // Longer delay for errors
+            });
+            
+            // Set the source and try to play
+            audio.src = item.url;
+            
+            // Try to play with better error handling
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('Audio started playing');
+                }).catch(error => {
+                    console.error('Playback failed:', error);
+                    document.getElementById('currentStatus').textContent = `Playback failed: ${item.title}`;
+                    
+                    // Mark as failed in playlist
+                    if (currentItem) {
+                        currentItem.classList.remove('current');
+                        currentItem.classList.add('failed');
+                        currentItem.style.color = '#e74c3c';
+                    }
+                    
+                    // Skip to next item
+                    currentIndex++;
+                    setTimeout(() => {
+                        playCurrentItem();
+                    }, 2000);
+                });
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+        });
+    </script>
+</body>
+</html>
