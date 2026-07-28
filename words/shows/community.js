@@ -1,0 +1,20 @@
+// Community vocabulary (17 words)
+const SHOW_COMMUNITY_WORDS = [
+  { english: "sting", hebrew: "עוקץ", example: "It's a bumblebee nickname. It's cute, but it stings." },
+  { english: "yell", hebrew: "צועקים", example: "I wanna just say sorry for yelling at you." },
+  { english: "stir", hebrew: "מערבבים", example: "She stirs the pot. She's a pot stirrer." },
+  { english: "pot", hebrew: "סיר", example: "She stirs the pot. She's a pot stirrer." },
+  { english: "pouty", hebrew: "מרושל", example: "You know, the blond with the pouty," },
+  { english: "remnant", hebrew: "השריד", example: "A small, fading remnant of a star." },
+  { english: "dwarf", hebrew: "הגמד", example: "A white dwarf. That's right." },
+  { english: "density", hebrew: "צפיפות", example: "and it has the density of 40 suns." },
+  { english: "tension", hebrew: "המתח", example: "Will they or won't they? Sexual tension." },
+  { english: "will", hebrew: "יהיה", example: "Will they or won't they? Sexual tension." },
+  { english: "sort", hebrew: "למיין", example: "That's sort of my gimmick." },
+  { english: "preliminary", hebrew: "ראשוני", example: "I'd like to have a preliminary powwow," },
+  { english: "powwow", hebrew: "דִיוּן", example: "I'd like to have a preliminary powwow," },
+  { english: "conundrum", hebrew: "חידה", example: "our library's back door conundrum." },
+  { english: "emasculat", hebrew: "לְסַרֵס", example: "Do you people have any idea how emasculating that is?" },
+  { english: "brunet", hebrew: "ברונטית", example: "Mmm. Who is the lucky brunette?" },
+  { english: "thing", hebrew: "דברים", example: "Well, I try to keep things where they should be." },
+];

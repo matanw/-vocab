@@ -370,6 +370,19 @@
     <script src="words/nature.js"></script>
     <script src="words/travel.js"></script>
     <script src="words/tvshows.js"></script>
+    <script src="words/shows/anne-with-an-e.js"></script>
+    <script src="words/shows/friends.js"></script>
+    <script src="words/shows/superstore.js"></script>
+    <script src="words/shows/dolly-parton-christmas.js"></script>
+    <script src="words/shows/secrets-of-great-british-castles.js"></script>
+    <script src="words/shows/the-resident.js"></script>
+    <script src="words/shows/young-sheldon.js"></script>
+    <script src="words/shows/community.js"></script>
+    <script src="words/shows/pretty-smart.js"></script>
+    <script src="words/shows/mr-iglesias.js"></script>
+    <script src="words/shows/seinfeld.js"></script>
+    <script src="words/shows/tick-tick-boom.js"></script>
+    <script src="words/shows/the-crown.js"></script>
 
     <script>
         let currentWordIndex = 0;
@@ -388,7 +401,20 @@
             { id: 'work', label: 'Work', words: WORK_WORDS },
             { id: 'nature', label: 'Nature', words: NATURE_WORDS },
             { id: 'travel', label: 'Travel', words: TRAVEL_WORDS },
-            { id: 'tvshows', label: 'TV Shows', words: TVSHOWS_WORDS },
+            { id: 'tvshows', label: 'TV: Other', words: TVSHOWS_OTHER_WORDS },
+            { id: 'show-anne-with-an-e', label: 'TV: Anne with an E', words: SHOW_ANNE_WITH_AN_E_WORDS },
+            { id: 'show-friends', label: 'TV: Friends', words: SHOW_FRIENDS_WORDS },
+            { id: 'show-superstore', label: 'TV: Superstore', words: SHOW_SUPERSTORE_WORDS },
+            { id: 'show-dolly-parton-christmas', label: 'TV: Dolly Parton\'s Christmas on the Square', words: SHOW_DOLLY_PARTON_CHRISTMAS_WORDS },
+            { id: 'show-secrets-of-great-british-castles', label: 'TV: Secrets of Great British Castles', words: SHOW_SECRETS_OF_GREAT_BRITISH_CASTLES_WORDS },
+            { id: 'show-the-resident', label: 'TV: The Resident', words: SHOW_THE_RESIDENT_WORDS },
+            { id: 'show-young-sheldon', label: 'TV: Young Sheldon', words: SHOW_YOUNG_SHELDON_WORDS },
+            { id: 'show-community', label: 'TV: Community', words: SHOW_COMMUNITY_WORDS },
+            { id: 'show-pretty-smart', label: 'TV: Pretty Smart', words: SHOW_PRETTY_SMART_WORDS },
+            { id: 'show-mr-iglesias', label: 'TV: Mr. Iglesias', words: SHOW_MR_IGLESIAS_WORDS },
+            { id: 'show-seinfeld', label: 'TV: Seinfeld', words: SHOW_SEINFELD_WORDS },
+            { id: 'show-tick-tick-boom', label: 'TV: tick, tick... BOOM!', words: SHOW_TICK_TICK_BOOM_WORDS },
+            { id: 'show-the-crown', label: 'TV: The Crown', words: SHOW_THE_CROWN_WORDS },
         ];
 
         const vocabulary = GROUPS.flatMap(g => g.words.map(w => ({ ...w, group: g.id })));
