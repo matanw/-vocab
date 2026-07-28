@@ -1,0 +1,22 @@
+// Feelings vocabulary (19 words)
+const FEELINGS_WORDS = [
+  { english: "apprehension", hebrew: "חשש / דאגה", example: "He felt a growing apprehension before giving his speech." },
+  { english: "serene", hebrew: "שלווה / רגועה", example: "The lake was perfectly still and looked completely serene." },
+  { english: "melancholy", hebrew: "מלנכוליה / עגמומיות", example: "The rainy day gave the whole town a feeling of melancholy." },
+  { english: "resilient", hebrew: "גמיש / בעל כושר התאוששות", example: "Despite many setbacks, she remained remarkably resilient." },
+  { english: "elation", hebrew: "שמחה עזה / עילוי", example: "The team felt intense elation after winning the championship." },
+  { english: "contempt", hebrew: "בוז", example: "She looked at the rude customer with undisguised contempt." },
+  { english: "vigilant", hebrew: "דרוך / ערני", example: "The guard remained vigilant throughout the night." },
+  { english: "exasperated", hebrew: "מתוסכל / מיואש", example: "He was exasperated by the continuous delays and excuses." },
+  { english: "pensive", hebrew: "הרהורי / מהורהר", example: "The young man sat alone, looking pensive and thoughtful." },
+  { english: "jovial", hebrew: "עליז / שמח", example: "His jovial personality makes him popular at every party." },
+  { english: "aversion", hebrew: "סלידה / דחייה", example: "She has a strong aversion to loud noises." },
+  { english: "ecstasy", hebrew: "אקסטזה / התעלות", example: "The crowd was in a state of ecstasy when the band took the stage." },
+  { english: "disdain", hebrew: "זלזול / גנאי", example: "The critic reviewed the play with open disdain." },
+  { english: "bliss", hebrew: "אושר עילאי", example: "They found marital bliss in their quiet life together." },
+  { english: "cynical", hebrew: "ציני", example: "His cynical view prevents him from trusting politicians." },
+  { english: "grief", hebrew: "יגון / צער עמוק", example: "The family gathered to share their grief after the loss." },
+  { english: "wary", hebrew: "חשדן / זהיר", example: "They were wary of the stranger who approached them in the dark." },
+  { english: "zest", hebrew: "מרץ / התלהבות", example: "He approached every new challenge with great zest." },
+  { english: "humility", hebrew: "צניעות", example: "Despite his success, he always showed genuine humility." },
+];

@@ -1,0 +1,23 @@
+// Nature vocabulary (20 words)
+const NATURE_WORDS = [
+  { english: "erosion", hebrew: "שחיקה / סחיפה", example: "The coastal erosion is changing the shape of the beach." },
+  { english: "habitat", hebrew: "בית גידול", example: "Deforestation is destroying the natural habitat of many animals." },
+  { english: "tidal", hebrew: "קשור לגאות ושפל", example: "The boat can only leave the harbor during the high tidal flow." },
+  { english: "conservation", hebrew: "שימור", example: "Wildlife conservation is a major focus of this national park." },
+  { english: "ecosystem", hebrew: "מערכת אקולוגית", example: "Protecting the coral reef is essential for the marine ecosystem." },
+  { english: "drought", hebrew: "בצורת", example: "The long drought led to severe water shortages." },
+  { english: "flora", hebrew: "צמחייה", example: "The unique flora of the island attracts many botanists." },
+  { english: "fauna", hebrew: "בעלי חיים", example: "We spotted diverse fauna during our safari drive." },
+  { english: "seismology", hebrew: "סייסמולוגיה (חקר רעידות אדמה)", example: "The study of earthquakes falls under seismology." },
+  { english: "reservoir", hebrew: "מאגר מים", example: "The city depends on the reservoir for its drinking water." },
+  { english: "ozone layer", hebrew: "שכבת אוזון", example: "Chemical pollutants damage the Earth's ozone layer." },
+  { english: "landslide", hebrew: "מפולת אדמה", example: "Heavy rain caused a dangerous landslide on the mountain road." },
+  { english: "extinct", hebrew: "נכחד", example: "The dinosaur species became extinct millions of years ago." },
+  { english: "sustainable", hebrew: "בר-קיימא", example: "The company is committed to sustainable business practices." },
+  { english: "predator", hebrew: "טורף", example: "The lion is the main predator in this savanna." },
+  { english: "prey", hebrew: "טרף", example: "Rabbits are a common prey animal for foxes." },
+  { english: "geothermal", hebrew: "גיאותרמי (חום פנימי של כדור הארץ)", example: "Geothermal energy is used to heat the buildings." },
+  { english: "meteorology", hebrew: "מטאורולוגיה (חקר מזג האוויר)", example: "Meteorology helps predict severe storms." },
+  { english: "submerge", hebrew: "להטביע / לשקוע", example: "The rising waters began to submerge the coastal town." },
+  { english: "canopy", hebrew: "חופת יער / צמרות עצים", example: "Sunlight barely reaches the forest floor beneath the thick canopy." },
+];

@@ -1,0 +1,23 @@
+// Health vocabulary (20 words)
+const HEALTH_WORDS = [
+  { english: "tendon", hebrew: "גיד", example: "He tore a tendon in his leg while playing soccer." },
+  { english: "diagnosis", hebrew: "אבחון", example: "The doctor gave her a clear diagnosis after the tests." },
+  { english: "fatigue", hebrew: "עייפות קיצונית", example: "Severe fatigue prevented her from finishing the marathon." },
+  { english: "circulation", hebrew: "מחזור הדם", example: "The doctor checked his foot to ensure good circulation." },
+  { english: "symptom", hebrew: "תסמין", example: "Fever and cough are common symptoms of the flu." },
+  { english: "immune system", hebrew: "מערכת חיסונית", example: "Eating well helps strengthen your immune system." },
+  { english: "sedentary", hebrew: "יושבני / בלתי פעיל", example: "A sedentary lifestyle can lead to many health problems." },
+  { english: "ailment", hebrew: "מחלה קלה / חולי", example: "She complained of a minor digestive ailment." },
+  { english: "rehabilitation", hebrew: "שיקום", example: "He went through intensive rehabilitation after the accident." },
+  { english: "fracture", hebrew: "שבר", example: "The X-ray confirmed a small fracture in the bone." },
+  { english: "respiration", hebrew: "נשימה", example: "His respiration was shallow and uneven." },
+  { english: "metabolism", hebrew: "חילוף חומרים", example: "Regular exercise speeds up your metabolism." },
+  { english: "nutrient", hebrew: "חומר מזין", example: "Fruits and vegetables are rich in essential nutrients." },
+  { english: "concussion", hebrew: "זעזוע מוח", example: "He suffered a concussion after falling off his bike." },
+  { english: "therapy", hebrew: "טיפול", example: "She started physical therapy to heal her shoulder injury." },
+  { english: "hygiene", hebrew: "היגיינה", example: "Good hygiene is important for preventing illness." },
+  { english: "wellness", hebrew: "איכות חיים / בריאות כללית", example: "The company promotes a culture of wellness among its employees." },
+  { english: "constriction", hebrew: "היצרות / כיווץ", example: "The cold causes constriction of the blood vessels." },
+  { english: "antidote", hebrew: "תרופת נגד / סם נגד רעל", example: "They rushed to find the antidote for the snake venom." },
+  { english: "stamina", hebrew: "כושר עמידה / סיבולת", example: "The long hike requires a lot of stamina." },
+];
