@@ -392,6 +392,7 @@
     <script src="words/shows/seinfeld.js"></script>
     <script src="words/shows/tick-tick-boom.js"></script>
     <script src="words/shows/the-crown.js"></script>
+    <script src="words/shows/brooklyn-nine-nine.js"></script>
 
     <script>
         let currentWordIndex = 0;
@@ -433,6 +434,7 @@
             { id: 'show-seinfeld', label: 'TV: Seinfeld', words: SHOW_SEINFELD_WORDS },
             { id: 'show-tick-tick-boom', label: 'TV: tick, tick... BOOM!', words: SHOW_TICK_TICK_BOOM_WORDS },
             { id: 'show-the-crown', label: 'TV: The Crown', words: SHOW_THE_CROWN_WORDS },
+            { id: 'show-brooklyn-nine-nine', label: 'TV: Brooklyn Nine-Nine', words: SHOW_BROOKLYN_NINE_NINE_WORDS },
         ];
 
         const vocabulary = GROUPS.flatMap(g => g.words.map(w => ({ ...w, group: g.id })));
